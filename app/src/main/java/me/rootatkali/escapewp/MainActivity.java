@@ -1,10 +1,17 @@
 package me.rootatkali.escapewp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,17 +26,48 @@ public class MainActivity extends AppCompatActivity {
   private Map<Integer, Node> nodes;
   private SharedPreferences prefs;
   private Node current;
+  private TextView lblText;
+  private LinearLayout vbxButtons;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     
+    lblText = findViewById(R.id.lblText);
+    vbxButtons = findViewById(R.id.vbxButtons);
+    
+    lblText.setMovementMethod(new ScrollingMovementMethod());
+    
     initializeNodes();
     prefs = getPreferences(Context.MODE_PRIVATE);
     score = prefs.getInt(getString(R.string.score_key), 0);
     current = nodes.get(prefs.getInt(getString(R.string.current_node_key), 0));
-    
+    game();
+  }
+  
+  private void game() {
+    lblText.append(current.getMessage());
+    lblText.append("\n");
+    vbxButtons.removeAllViews();
+    for (Action a : current.getOptions()) {
+      Button btn = new Button(this);
+      btn.setText(a.getMessageId());
+      btn.setOnClickListener(v -> {
+        if (a.getResult() != null) {
+          lblText.append(Html.fromHtml(
+              String.format("<i>%s</i>", a.getResult()),
+              HtmlCompat.FROM_HTML_MODE_LEGACY
+          ));
+          lblText.append("\n");
+        }
+        current = next(a.getId());
+        game();
+      });
+      vbxButtons.addView(btn, new LinearLayout.LayoutParams(
+          LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+      ));
+    }
   }
   
   private void initializeNodes() {
@@ -74,16 +112,16 @@ public class MainActivity extends AppCompatActivity {
     Action action = Arrays.stream(current.getOptions())
         .filter(a -> a.getId() == optionId)
         .findFirst()
-        .orElseThrow(RuntimeException::new);
+        .orElseThrow(IllegalArgumentException::new);
     score += action.getScore();
     Node next = Optional.ofNullable(nodes.get(action.getNextNode()))
-        .orElseThrow(RuntimeException::new);
+        .orElseThrow(UnsupportedOperationException::new);
     
     prefs.edit()
         .putInt(getString(R.string.score_key), score)
         .putInt(getString(R.string.current_node_key), next.getId())
         .apply();
-  
+    
     try {
       Thread.sleep(100);
     } catch (InterruptedException e) {
