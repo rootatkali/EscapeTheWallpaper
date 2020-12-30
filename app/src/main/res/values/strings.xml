@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">EscapeTheWallpaper</string>
+    <string name="score_key">score</string>
+    <string name="current_node_key">currentNode</string>
+    <string name="n0a0">Open your eyes</string>
 </resources>
