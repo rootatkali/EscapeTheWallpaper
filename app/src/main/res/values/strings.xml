@@ -3,4 +3,10 @@
     <string name="score_key">score</string>
     <string name="current_node_key">currentNode</string>
     <string name="n0a0">Open your eyes</string>
+    <string name="n1a0">Flick the switch</string>
+    <string name="ellipsis">...</string>
+    <string name="n4a0">Open the door</string>
+    <string name="n4a1">Go to the desk</string>
+    <string name="n6a0">Open the drawer</string>
+    <string name="n6a1">Read the papers</string>
 </resources>
