@@ -1,12 +1,30 @@
 <resources>
     <string name="app_name">EscapeTheWallpaper</string>
     <string name="score_key">score</string>
-    <string name="current_node_key">currentNode</string>
+    <string name="current_node_key">current_node</string>
+    <string name="last_text_key">last_text</string>
     <string name="n0a0">Open your eyes</string>
     <string name="n1a0">Flick the switch</string>
-    <string name="ellipsis">...</string>
+    <string name="ellipsis">…</string>
     <string name="n4a0">Open the door</string>
     <string name="n4a1">Go to the desk</string>
     <string name="n6a0">Open the drawer</string>
     <string name="n6a1">Read the papers</string>
+    <string name="n8a0">Grab the key</string>
+    <string name="n9a0">Scream</string>
+    <string name="n9a1">Stay silent</string>
+    <string name="n100a0">Get me out of here!</string>
+    <string name="n100a1">Where am I?</string>
+    <string name="n112a1">Who are you?</string>
+    <string name="n115a0">Or else what?!</string>
+    <string name="n115a1">Take the pills</string>
+    <string name="n120a0">Explain what?</string>
+    <string name="n123a0">Take the pills</string>
+    <string name="n123a1">My condition?</string>
+
+    <string name="n200a0">Hide behind the bed</string>
+
+
+    <string name="btn_replay">Play again</string>
+    <string name="btn_credits">Credits</string>
 </resources>
