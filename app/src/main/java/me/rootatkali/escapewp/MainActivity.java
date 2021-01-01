@@ -52,37 +52,8 @@ public class MainActivity extends AppCompatActivity {
     lblText.append("\n");
     vbxButtons.removeAllViews();
     
-    // Finish scenario
     if (current.getOptions() == null || current.getOptions().length <= 0) {
-      lblText.append("\n");
-      lblText.append("The game has ended. Your score was ");
-      lblText.append(String.valueOf(score));
-      lblText.append(".\n\n");
-      
-      Button btnReplay = new Button(this);
-      btnReplay.setText(R.string.btn_replay);
-      btnReplay.setOnClickListener(v -> {
-        prefs.edit().clear().apply();
-        current = nodes.get(0);
-        score = 0;
-        lblText.setText("");
-        game();
-      });
-      
-      vbxButtons.addView(btnReplay, new LinearLayout.LayoutParams(
-          LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-      ));
-      
-      Button btnCredits = new Button(this);
-      btnCredits.setText(R.string.btn_credits);
-      btnCredits.setOnClickListener(v -> {
-        lblText.setText("Escape the Wallpaper\n\nCreated by Rotem Moses.\n\n\n");
-      });
-      vbxButtons.addView(btnCredits, new LinearLayout.LayoutParams(
-          LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-      ));
-      
-      // Regular game
+      handleFinish();
     } else for (Action a : current.getOptions()) {
       Button btn = new Button(this);
       btn.setText(a.getMessageId());
@@ -101,6 +72,35 @@ public class MainActivity extends AppCompatActivity {
           LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
       ));
     }
+  }
+  
+  private void handleFinish() {
+    lblText.append("\n");
+    lblText.append("The game has ended. Your score was ");
+    lblText.append(String.valueOf(score));
+    lblText.append(".\n\n");
+    
+    Button btnReplay = new Button(this);
+    btnReplay.setText(R.string.btn_replay);
+    btnReplay.setOnClickListener(v -> {
+      prefs.edit().clear().apply();
+      current = nodes.get(0);
+      score = 0;
+      lblText.setText("");
+      game();
+    });
+    
+    vbxButtons.addView(btnReplay, new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+    ));
+    
+    Button btnCredits = new Button(this);
+    btnCredits.setText(R.string.btn_credits);
+    btnCredits.setOnClickListener(v ->
+        lblText.setText("Escape the Wallpaper\n\nCreated by Rotem Moses.\n\n\n"));
+    vbxButtons.addView(btnCredits, new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+    ));
   }
   
   private void initializeNodes() {
@@ -158,9 +158,11 @@ public class MainActivity extends AppCompatActivity {
             new Action(0, R.string.n100a0, -2, "You: Get me out of here!", 110),
             new Action(1, R.string.n100a1, 1, "You: Where am I?", 120)
         );
-    Node n110 = new Node(110, "Man: Oh. You again.").addOptions(
-        new Action(0, R.string.ellipsis, 0, "", 111)
-    );
+    
+    Node n110 = new Node(110, "Man: Oh. You again.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, "", 111)
+        );
     Node n111 = new Node(111, "Man: When will you learn to stop yelling so much?")
         .addOptions(
             new Action(0, R.string.ellipsis, 0, null, 112)
@@ -217,27 +219,146 @@ public class MainActivity extends AppCompatActivity {
         .addOptions(
             new Action(0, R.string.n123a0, 0, "You take the pills.", 125)
         );
-    // TODO Continue plot 120
+    Node n125 = new Node(125, "Man: Someone will come here later to explain" +
+        " everything. For now, you should rest.")
+        .addOptions(
+            new Action(0, R.string.n125a0, 0, "You go and rest on the bed." +
+                " The man leaves and locks the door.", 126)
+        );
+    Node n126 = new Node(126, "A knock on the door wakes you up.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, null, 127)
+        );
+    Node n127 = new Node(127, "Woman: May I come in?")
+        .addOptions(
+            new Action(0, R.string.n127a0, 3, "You: Yes.", 128),
+            new Action(0, R.string.n127a1, 0, "You: Yes...", 128),
+            new Action(0, R.string.ellipsis, -1, "You: ...", 128)
+        );
+    Node n128 = new Node(128, "The door opens. A young lady enters the room. " +
+        "She sits next to you on the bed.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, null, 129)
+        );
+    Node n129 = new Node(129, "Woman: We don't have much time today. I am here to get" +
+        " you out of this horrible place. But first, I needed to talk to you. I had to explain " +
+        "where you are and why you're here." +
+        " This place is an old mansion, converted to a mental prison.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, "You: ...", 130)
+        );
+    Node n130 = new Node(130, "Woman: You are here because your spouse thought you were " +
+        "insane. You are not. You are being held here against your will.")
+        .addOptions(
+            new Action(0, R.string.n130a0, 0, "You: Who wrote those papers?", 131),
+            new Action(1, R.string.n130a1, 0, "You: How long have I been here for?", 132)
+        );
+    Node n131 = new Node(131, "Woman: You did. They give you drugs so you forget " +
+        "what you do here every day.").addOptions(
+        new Action(0, R.string.ellipsis, 0, null, 133)
+    );
+    Node n132 = new Node(132, "Woman: At least a year. No one knows for sure.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, null, 133)
+        );
+    Node n133 = new Node(133, "Woman: It is now time to start a new life. Follow me.")
+        .addOptions(
+            new Action(0, R.string.n133a0, 10, "You get up and follow the woman.", 134)
+        );
+    Node n134 = new Node(134, "You and the woman leave the building. You go outside " +
+        "for the first time in a long time. You remember now. Your life starts today");
+    // END 120
+    
     
     Node n200 = new Node(200, "The footsteps are getting closer.")
         .addOptions(
-            new Action(0, R.string.ellipsis, +1, null, 220),
+            new Action(0, R.string.ellipsis, 1, null, 220),
             new Action(1, R.string.n200a0, -1, "You hide behind the bed.", 210)
         );
-    // TODO Write plots 210 and 220
+    
+    Node n210 = new Node(210, "You hear the door open. A person walks in, but you do " +
+        "not look at them.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, null, 211)
+        );
+    Node n211 = new Node(211, "Man: Where are you?")
+        .addOptions(
+            new Action(0, R.string.ellipsis, -20, "You jump on the man.", 212)
+        );
+    Node n212 = new Node(212, "Man: What the hell are you doing?!")
+        .addOptions(
+            new Action(0, R.string.n212a0, 0, "You let out a yell and start punching the man.", 213)
+        );
+    Node n213 = new Node(213, "Man: Oh, I've had enough of you already.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, null, 214)
+        );
+    Node n214 = new Node(214, "The man starts to strangle you.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, "You lose your ability to breathe.", 215)
+        );
+    Node n215 = new Node(215, "You collapse. This is the end.");
+    // END 210
+    
+    Node n220 = new Node(220, "A tall man enters the room.")
+        .addOptions(
+            new Action(0, R.string.n220a0, 5, "You: Who are you?", 221)
+        );
+    Node n221 = new Node(221, "Man: I am the manager of this facility. You came here " +
+        "because your spouse believed you to be insane. He thought your writings were morally " +
+        "wrong, so he placed you here in isolation.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 5, null, 222)
+        );
+    Node n222 = new Node(222, "Man: When you first came here, you were perfectly fine." +
+        " Your husband had us place you in complete isolation.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, null, 223)
+        );
+    Node n223 = new Node(223, "Man: Throughout your \"stay\" here, your mental health " +
+        "deteriorated. After a new month, you started to forget who you are.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, null, 224)
+        );
+    Node n224 = new Node(224, "Man: You even... attacked a staff member. But I know " +
+        "this isn't who you really are.")
+        .addOptions(
+            new Action(0, R.string.n224a0, 0, "You: Will you help me?", 225)
+        );
+    Node n225 = new Node(225, "Man: Yes. I will help you go back to your real self. " +
+        "The first step is to get you out of this place. Go with me, will you?")
+        .addOptions(
+            new Action(0, R.string.n225a0, 5, "You follow him. You " +
+                "and the man leave the building.", 226)
+        );
+    Node n226 = new Node(226, "Man: Do you feel better now?")
+        .addOptions(
+            new Action(0, R.string.n226a0, 0, "You: Yes! I'm starting to... feel!", 227)
+        );
+    Node n227 = new Node(227, "Man: Great! Now, just come with me until we get to my " +
+        "house. I want to personally care for you until you are strong enough to return to the world.")
+        .addOptions(
+            new Action(0, R.string.ellipsis, 0, "You go with the man. You reach " +
+                "his house.", 228)
+        );
+    Node n228 = new Node(228, "The man cares for you while in his house. You " +
+        "eventually get to the point where you are strong enough. Your new life begins.");
     
     putNodes(
         n0, n1, n2, n3, n4, n5, n6, n7, n8, n9,
         n100,
         n110, n111, n112, n113, n114, n115, n116, n117,
-        n120, n121, n122, n123, n124,
-        n200
+        n120, n121, n122, n123, n124, n125, n126, n127, n128, n129,
+        n130, n131, n132, n133, n134,
+        n200,
+        n210, n211, n212, n213, n214, n215,
+        n220, n221, n222, n223, n224, n225, n226, n227, n228
     );
   }
   
   private void putNodes(Node... nds) {
     for (Node n : nds) {
-      this.nodes.put(n.getId(), n);
+      nodes.put(n.getId(), n);
     }
   }
   

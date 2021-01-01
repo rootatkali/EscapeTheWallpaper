@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EscapeTheWallpaper</string>
+    <string name="app_name">Escape The Wallpaper</string>
     <string name="score_key">score</string>
     <string name="current_node_key">current_node</string>
     <string name="last_text_key">last_text</string>
@@ -21,9 +21,19 @@
     <string name="n120a0">Explain what?</string>
     <string name="n123a0">Take the pills</string>
     <string name="n123a1">My condition?</string>
+    <string name="n125a0">Rest</string>
+    <string name="n127a0">Yes</string>
+    <string name="n127a1">Yes…</string>
+    <string name="n130a0">Who wrote these papers?</string>
+    <string name="n130a1">How long have I been here for?</string>
+    <string name="n133a0">Follow her</string>
 
     <string name="n200a0">Hide behind the bed</string>
-
+    <string name="n212a0">Scream and punch him</string>
+    <string name="n220a0">Who are you?</string>
+    <string name="n224a0">Will you help me?</string>
+    <string name="n225a0">Follow him</string>
+    <string name="n226a0">Yes!</string>
 
     <string name="btn_replay">Play again</string>
     <string name="btn_credits">Credits</string>
